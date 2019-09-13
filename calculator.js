@@ -5,6 +5,7 @@ calculator={
     firstEntered: false,
     action: null
 }
+initialCalculator=JSON.parse(JSON.stringify(calculator));
 function showResult()
 {
     let display=document.getElementById("screen");
@@ -15,11 +16,7 @@ document.getElementById("calculator-keys").addEventListener("click",showValue);
 //console.log(keys.childNodes);
 function resetCalculator()
 {
-    calculator.result="0";
-    calculator.firstValue=null;
-    calculator.secondValue=null;
-    calculator.action=null;
-    calculator.firstEntered=false;
+    calculator=initialCalculator;
     showResult();
 }
 function showValue(clickedElement)
@@ -35,9 +32,11 @@ function showValue(clickedElement)
         }
         else if(value==="=")
         {
+            
+            //console.log(math.format(math.evaluate("0.1+0.2"), {precision: 4}).toString()) // 2i
             if(calculator.firstValue!=null && calculator.secondValue!=null && calculator.action!=null)
             {
-                calculator.firstValue=eval(calculator.firstValue+calculator.action+calculator.secondValue).toString();
+                calculator.firstValue=math.format(math.evaluate(calculator.firstValue+calculator.action+calculator.secondValue), {precision: 4}).toString();
                 calculator.secondValue=null;
                 calculator.action=null;
                 calculator.result=calculator.firstValue;
@@ -54,7 +53,7 @@ function showValue(clickedElement)
             }
             else if(calculator.firstValue!=null && calculator.secondValue!=null)
             {
-                calculator.firstValue=eval(calculator.firstValue+calculator.action+calculator.secondValue).toString();
+                calculator.firstValue=math.format(math.evaluate(calculator.firstValue+calculator.action+calculator.secondValue), {precision: 4}).toString();
                 calculator.secondValue=null;
                 calculator.result=calculator.firstValue;
             }
